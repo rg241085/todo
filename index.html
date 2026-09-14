@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Task Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- PWA Links -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+
+<body>
+    <div class="dashboard">
+        <!-- Desktop Header & Input -->
+        <div class="header-card">
+            <div class="header-top">
+                <div>
+                    <h2>Workspace Tasks</h2>
+                    <p class="subtitle">Manage your daily workflow efficiently</p>
+                </div>
+                <div class="progress-circle-container">
+                    <span id="progressText" class="progress-text">0%</span>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+            </div>
+
+            <!-- Ye section mobile par hide ho jayega -->
+            <div class="input-section" id="desktopInputSection">
+                <div class="input-wrapper">
+                    <i class="ri-keyboard-line icon-hint" title="Press F8 to focus"></i>
+                    <input type="text" id="taskInput" placeholder="Naya task likhein... (F8)" autofocus>
+                </div>
+                <input type="date" id="taskDate" title="Due Date">
+                <select id="taskPriority" title="Priority">
+                    <option value="normal">Normal</option>
+                    <option value="high">High Priority</option>
+                </select>
+                <button id="addBtn" title="Add Task"><i class="ri-add-line"></i></button>
+            </div>
+        </div>
+
+        <ul id="taskList" class="card-grid"></ul>
+    </div>
+
+    <!-- Mobile ke liye Floating Add Button -->
+    <button id="mobileFabBtn" class="mobile-fab"><i class="ri-add-line"></i></button>
+
+    <!-- Mobile Add Task Modal -->
+    <div id="addModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="ri-add-box-line"></i> Add New Task</h3>
+                <button id="closeAddModalIcon" class="icon-btn"><i class="ri-close-line"></i></button>
+            </div>
+            <textarea id="mobileTaskInput" rows="3" placeholder="Naya task likhein..."></textarea>
+            <div class="modal-row">
+                <input type="date" id="mobileTaskDate">
+                <select id="mobileTaskPriority">
+                    <option value="normal">Normal</option>
+                    <option value="high">High Priority</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelAddBtn" class="cancel-btn">Cancel</button>
+                <button id="saveMobileAddBtn" class="save-btn">Add Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="ri-edit-box-line"></i> Edit Task</h3>
+                <button id="closeModalIcon" class="icon-btn"><i class="ri-close-line"></i></button>
+            </div>
+            <textarea id="editTaskInput" rows="3" placeholder="Task update karein..."></textarea>
+            <div class="modal-row">
+                <input type="date" id="editTaskDate">
+                <select id="editTaskPriority">
+                    <option value="normal">Normal</option>
+                    <option value="high">High Priority</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelEditBtn" class="cancel-btn">Cancel</button>
+                <button id="saveEditBtn" class="save-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker registered successfuly');
+                })
+                .catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
